@@ -1340,6 +1340,9 @@ const (
 
 	// for inline custom emoji sticker
 	MessageEntityTypeCustomEmoji
+
+	// expandable blockquote
+	MessageEntityTypeExpandableBlockquote
 )
 
 // String returns string representation of MessageEntityType.
@@ -1418,8 +1421,10 @@ func (met *MessageEntityType) UnmarshalText(v []byte) error {
 		*met = MessageEntityTypeCustomEmoji
 	case "blockquote":
 		*met = MessageEntityTypeBlockquote
+	case "expandable_blockquote":
+		*met = MessageEntityTypeExpandableBlockquote
 	default:
-		return fmt.Errorf("unknown message entity type")
+		return fmt.Errorf("unknown message entity type: %s", string(v))
 	}
 
 	return nil
