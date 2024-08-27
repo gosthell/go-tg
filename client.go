@@ -238,7 +238,10 @@ func (client *Client) executeStreaming(
 	go func() {
 		defer pw.Close()
 		defer encoder.Close()
-
+		if encoder == nil {
+			errChan <- fmt.Errorf("encoder is nil")
+			return
+		}
 		if err := r.Encode(encoder); err != nil {
 			errChan <- err
 		}
