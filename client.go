@@ -236,12 +236,13 @@ func (client *Client) executeStreaming(
 
 	// upload
 	go func() {
-		defer pw.Close()
-		defer encoder.Close()
 		if encoder == nil {
 			errChan <- fmt.Errorf("encoder is nil")
 			return
 		}
+		defer pw.Close()
+		defer encoder.Close()
+
 		if err := r.Encode(encoder); err != nil {
 			errChan <- err
 		}
