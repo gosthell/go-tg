@@ -87,6 +87,9 @@ func (enc *multipartEncoder) WriteString(k string, v string) error {
 
 // AddFile encodes file value.
 func (enc *multipartEncoder) WriteFile(k string, file InputFile) error {
+	if file.Body == nil {
+		return fmt.Errorf("file body is nil")
+	}
 	writer, err := enc.w.CreateFormFile(k, file.Name)
 	if err != nil {
 		return fmt.Errorf("create form file '%s': %w", k, err)
