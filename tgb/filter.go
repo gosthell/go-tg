@@ -182,6 +182,9 @@ func (filter *commandFilter) Allow(ctx context.Context, update *Update) (bool, e
 	}
 
 	fullCommand, _, _ := strings.Cut(text, " ")
+	if len(fullCommand) < 1 {
+		return false, fmt.Errorf("command filter: invalid command: %s", text)
+	}
 
 	me, err := update.Client.Me(ctx)
 	if err != nil {
