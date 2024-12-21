@@ -192,8 +192,12 @@ func (filter *commandFilter) Allow(ctx context.Context, update *Update) (bool, e
 	}
 
 	prefix := fullCommand[:1]
-	command, mention, _ := strings.Cut(fullCommand[1:], "@")
-
+	var command, mention string
+	if len(fullCommand) > 1 {
+		command, mention, _ = strings.Cut(fullCommand[1:], "@")
+	} else {
+		command, mention = "", "" // Handle cases where no additional characters exist
+	}
 	if filter.ignoreCase {
 		command = strings.ToLower(command)
 	}
