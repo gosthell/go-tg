@@ -348,6 +348,72 @@ func (call *SendMessageCall) ReplyMarkup(replyMarkup ReplyMarkup) *SendMessageCa
 	return call
 }
 
+// SendMessageDraftCall reprenesents a call to the sendMessageDraft method.
+// Use this method to send a partial message while it is being generated, allowing streaming of messages to users.
+// Returns True on success.
+type SendMessageDraftCall struct {
+	CallNoResult
+}
+
+// NewSendMessageDraftCall constructs a new SendMessageDraftCall with required parameters.
+// chatID - Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+// draftID - Unique identifier of the draft message
+// text - Text of the draft message
+func NewSendMessageDraftCall(chatID PeerID, draftID int64, text string) *SendMessageDraftCall {
+	return &SendMessageDraftCall{
+		CallNoResult{
+			request: NewRequest("sendMessageDraft").
+				PeerID("chat_id", chatID).
+				Int64("draft_id", draftID).
+				String("text", text),
+		},
+	}
+}
+
+// SendMessageDraft constructs a new SendMessageDraftCall with required parameters.
+func (client *Client) SendMessageDraft(chatID PeerID, draftID int64, text string) *SendMessageDraftCall {
+	return BindClient(
+		NewSendMessageDraftCall(chatID, draftID, text),
+		client,
+	)
+}
+
+// ChatID Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+func (call *SendMessageDraftCall) ChatID(chatID PeerID) *SendMessageDraftCall {
+	call.request.PeerID("chat_id", chatID)
+	return call
+}
+
+// MessageThreadID Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+func (call *SendMessageDraftCall) MessageThreadID(messageThreadID int) *SendMessageDraftCall {
+	call.request.Int("message_thread_id", messageThreadID)
+	return call
+}
+
+// DraftID Unique identifier of the draft message
+func (call *SendMessageDraftCall) DraftID(draftID int64) *SendMessageDraftCall {
+	call.request.Int64("draft_id", draftID)
+	return call
+}
+
+// Text Text of the draft message
+func (call *SendMessageDraftCall) Text(text string) *SendMessageDraftCall {
+	call.request.String("text", text)
+	return call
+}
+
+// ParseMode Mode for parsing entities in the message text. See formatting options for more details.
+func (call *SendMessageDraftCall) ParseMode(parseMode ParseMode) *SendMessageDraftCall {
+	call.request.Stringer("parse_mode", parseMode)
+	return call
+}
+
+// Entities A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
+func (call *SendMessageDraftCall) Entities(entities []MessageEntity) *SendMessageDraftCall {
+	call.request.JSON("entities", entities)
+	return call
+}
+
 // ForwardMessageCall reprenesents a call to the forwardMessage method.
 // Use this method to forward messages of any kind
 // Service messages and messages with protected content can't be forwarded

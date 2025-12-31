@@ -157,6 +157,9 @@ type User struct {
 
 	// Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
 	CanConnectToBusiness bool `json:"can_connect_to_business,omitempty"`
+
+	// Optional. True, if the bot has forum topic mode enabled in private chats. Returned only in getMe.
+	HasTopicsEnabled bool `json:"has_topics_enabled,omitempty"`
 }
 
 // Chat this object represents a chat.
@@ -1149,6 +1152,9 @@ type ForumTopicCreated struct {
 
 	// Optional. Unique identifier of the custom emoji shown as the topic icon
 	IconCustomEmojiID string `json:"icon_custom_emoji_id,omitempty"`
+
+	// Optional. True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot
+	IsNameImplicit bool `json:"is_name_implicit,omitempty"`
 }
 
 // ForumTopicEdited this object represents a service message about an edited forum topic.
@@ -2135,6 +2141,9 @@ type ForumTopic struct {
 
 	// Optional. Unique identifier of the custom emoji shown as the topic icon
 	IconCustomEmojiID string `json:"icon_custom_emoji_id,omitempty"`
+
+	// Optional. True, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot
+	IsNameImplicit bool `json:"is_name_implicit,omitempty"`
 }
 
 // BotCommand this object represents a bot command.
