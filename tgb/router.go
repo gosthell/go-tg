@@ -197,6 +197,11 @@ func (bot *Router) DeletedBusinessMessages(handler DeletedBusinessMessageHandler
 	return bot.register(tg.UpdateTypeDeletedBusinessMessages, handler, filters...)
 }
 
+// ManagedBot register handlers for Update with not empty ManagedBot field.
+func (bot *Router) ManagedBot(handler ManagedBotHandler, filters ...Filter) *Router {
+	return bot.register(tg.UpdateTypeManagedBot, handler, filters...)
+}
+
 // Error registers a handler for errors.
 // If any error occurs in the chain, it will be passed to that handler.
 // By default, errors are returned back by handler method.

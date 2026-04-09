@@ -317,3 +317,10 @@ type DeletedBusinessMessagesUpdate struct {
 	Update *Update
 	Client *tg.Client
 }
+
+// ManagedBotUpdate it's extend wrapper around [tg.ManagedBotUpdated].
+type ManagedBotUpdate struct {
+	*tg.ManagedBotUpdated
+	Update *Update
+	Client *tg.Client
+}

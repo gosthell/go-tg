@@ -223,3 +223,14 @@ func (handler DeletedBusinessMessageHandler) Handle(ctx context.Context, update 
 		Client:                  update.Client,
 	})
 }
+
+// ManagedBotHandler it's typed handler for [ManagedBotUpdate].
+type ManagedBotHandler func(context.Context, *ManagedBotUpdate) error
+
+func (handler ManagedBotHandler) Handle(ctx context.Context, update *Update) error {
+	return handler(ctx, &ManagedBotUpdate{
+		ManagedBotUpdated: update.ManagedBot,
+		Update:            update,
+		Client:            update.Client,
+	})
+}

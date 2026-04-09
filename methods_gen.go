@@ -6775,3 +6775,65 @@ func (call *GetGameHighScoresCall) InlineMessageID(inlineMessageID string) *GetG
 	call.request.String("inline_message_id", inlineMessageID)
 	return call
 }
+
+// GetManagedBotTokenCall represents a call to the getManagedBotToken method.
+// Use this method to get the token of a managed bot. Returns the token as String on success.
+type GetManagedBotTokenCall struct {
+	Call[string]
+}
+
+// NewGetManagedBotTokenCall constructs a new GetManagedBotTokenCall with required parameters.
+// userID - User identifier of the managed bot whose token will be returned
+func NewGetManagedBotTokenCall(userID UserID) *GetManagedBotTokenCall {
+	return &GetManagedBotTokenCall{
+		Call[string]{
+			request: NewRequest("getManagedBotToken").
+				UserID("user_id", userID),
+		},
+	}
+}
+
+// GetManagedBotToken constructs a new GetManagedBotTokenCall with required parameters.
+func (client *Client) GetManagedBotToken(userID UserID) *GetManagedBotTokenCall {
+	return BindClient(
+		NewGetManagedBotTokenCall(userID),
+		client,
+	)
+}
+
+// UserID User identifier of the managed bot whose token will be returned
+func (call *GetManagedBotTokenCall) UserID(userID UserID) *GetManagedBotTokenCall {
+	call.request.UserID("user_id", userID)
+	return call
+}
+
+// ReplaceManagedBotTokenCall represents a call to the replaceManagedBotToken method.
+// Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
+type ReplaceManagedBotTokenCall struct {
+	Call[string]
+}
+
+// NewReplaceManagedBotTokenCall constructs a new ReplaceManagedBotTokenCall with required parameters.
+// userID - User identifier of the managed bot whose token will be replaced
+func NewReplaceManagedBotTokenCall(userID UserID) *ReplaceManagedBotTokenCall {
+	return &ReplaceManagedBotTokenCall{
+		Call[string]{
+			request: NewRequest("replaceManagedBotToken").
+				UserID("user_id", userID),
+		},
+	}
+}
+
+// ReplaceManagedBotToken constructs a new ReplaceManagedBotTokenCall with required parameters.
+func (client *Client) ReplaceManagedBotToken(userID UserID) *ReplaceManagedBotTokenCall {
+	return BindClient(
+		NewReplaceManagedBotTokenCall(userID),
+		client,
+	)
+}
+
+// UserID User identifier of the managed bot whose token will be replaced
+func (call *ReplaceManagedBotTokenCall) UserID(userID UserID) *ReplaceManagedBotTokenCall {
+	call.request.UserID("user_id", userID)
+	return call
+}

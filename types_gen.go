@@ -78,6 +78,9 @@ type Update struct {
 
 	// Optional. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
 	RemovedChatBoost *ChatBoostRemoved `json:"removed_chat_boost,omitempty"`
+
+	// Optional. Updates about the creation of managed bots and the change of their token.
+	ManagedBot *ManagedBotUpdated `json:"managed_bot,omitempty"`
 }
 
 // WebhookInfo describes the current status of a webhook.
@@ -160,6 +163,9 @@ type User struct {
 
 	// Optional. True, if the bot has forum topic mode enabled in private chats. Returned only in getMe.
 	HasTopicsEnabled bool `json:"has_topics_enabled,omitempty"`
+
+	// Optional. True, if the bot can manage other bots. Returned only in getMe.
+	CanManageBots bool `json:"can_manage_bots,omitempty"`
 }
 
 // Chat this object represents a chat.
@@ -539,6 +545,9 @@ type Message struct {
 
 	// Optional. Service message: data sent by a Web App
 	WebAppData *WebAppData `json:"web_app_data,omitempty"`
+
+	// Optional. Service message: a managed bot was created
+	ManagedBotCreated *ManagedBotCreated `json:"managed_bot_created,omitempty"`
 
 	// Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
 	ReplyMarkup *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
@@ -1409,10 +1418,13 @@ type KeyboardButton struct {
 	RequestUsers *KeyboardButtonRequestUsers `json:"request_users,omitempty"`
 
 	// Optional. If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
-	RequestChat *KeyboardButtonRequestChat `json:"request_chat,omitempty"`
+	RequestChat *KeyboardButtonRequestChat `json:”request_chat,omitempty”`
+
+	// Optional. If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available in private chats only.
+	RequestManagedBot *KeyboardButtonRequestManagedBot `json:”request_managed_bot,omitempty”`
 
 	// Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
-	RequestContact bool `json:"request_contact,omitempty"`
+	RequestContact bool `json:”request_contact,omitempty”`
 
 	// Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only.
 	RequestLocation bool `json:"request_location,omitempty"`
@@ -2389,6 +2401,33 @@ type BusinessMessagesDeleted struct {
 
 	// A JSON-serialized list of identifiers of deleted messages in the chat of the business account
 	MessageIds []int `json:"message_ids"`
+}
+
+// ManagedBotCreated this object contains information about the bot that was created to be managed by the current bot.
+type ManagedBotCreated struct {
+	// Information about the bot. The bot's token can be fetched using the method getManagedBotToken.
+	Bot User `json:"bot"`
+}
+
+// ManagedBotUpdated this object contains information about the creation, token update, or owner update of a bot that is managed by the current bot.
+type ManagedBotUpdated struct {
+	// User that created the bot
+	User User `json:"user"`
+
+	// Information about the bot. Token of the bot can be fetched using the method getManagedBotToken.
+	Bot User `json:"bot"`
+}
+
+// KeyboardButtonRequestManagedBot this object defines the parameters for the creation of a managed bot.
+type KeyboardButtonRequestManagedBot struct {
+	// Signed 32-bit identifier of the request. Must be unique within the message
+	RequestID int `json:"request_id"`
+
+	// Optional. Suggested name for the bot
+	SuggestedName string `json:"suggested_name,omitempty"`
+
+	// Optional. Suggested username for the bot
+	SuggestedUsername string `json:"suggested_username,omitempty"`
 }
 
 // ResponseParameters describes why a request was unsuccessful.
