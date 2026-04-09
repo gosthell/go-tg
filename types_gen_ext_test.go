@@ -1008,6 +1008,8 @@ func TestMessageEntityType_String(t *testing.T) {
 		{MessageEntityTypeTextMention, "text_mention"},
 		{MessageEntityTypeCustomEmoji, "custom_emoji"},
 		{MessageEntityTypeBlockquote, "blockquote"},
+		{MessageEntityTypeExpandableBlockquote, "expandable_blockquote"},
+		{MessageEntityTypeDateTime, "date_time"},
 	} {
 		assert.Equal(t, test.Want, test.Type.String())
 	}
@@ -1038,6 +1040,8 @@ func TestMessageEntityType_MarshalText(t *testing.T) {
 		{MessageEntityTypeTextMention, []byte("text_mention"), false},
 		{MessageEntityTypeCustomEmoji, []byte("custom_emoji"), false},
 		{MessageEntityTypeBlockquote, []byte("blockquote"), false},
+		{MessageEntityTypeExpandableBlockquote, []byte("expandable_blockquote"), false},
+		{MessageEntityTypeDateTime, []byte("date_time"), false},
 	} {
 		b, err := test.Type.MarshalText()
 		if test.Err {
@@ -1074,6 +1078,8 @@ func TestMessageEntityType_UnmarshalText(t *testing.T) {
 		{"text_mention", MessageEntityTypeTextMention, false},
 		{"custom_emoji", MessageEntityTypeCustomEmoji, false},
 		{"blockquote", MessageEntityTypeBlockquote, false},
+		{"expandable_blockquote", MessageEntityTypeExpandableBlockquote, false},
+		{"date_time", MessageEntityTypeDateTime, false},
 	} {
 		var e MessageEntityType
 

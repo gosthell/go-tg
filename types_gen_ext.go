@@ -1343,11 +1343,14 @@ const (
 
 	// expandable blockquote
 	MessageEntityTypeExpandableBlockquote
+
+	// date and time
+	MessageEntityTypeDateTime
 )
 
 // String returns string representation of MessageEntityType.
 func (met MessageEntityType) String() string {
-	if met > MessageEntityTypeUnknown && met <= MessageEntityTypeCustomEmoji {
+	if met > MessageEntityTypeUnknown && met <= MessageEntityTypeDateTime {
 		return [...]string{
 			"mention",
 			"hashtag",
@@ -1367,6 +1370,8 @@ func (met MessageEntityType) String() string {
 			"text_link",
 			"text_mention",
 			"custom_emoji",
+			"expandable_blockquote",
+			"date_time",
 		}[met-1]
 	}
 
@@ -1423,6 +1428,8 @@ func (met *MessageEntityType) UnmarshalText(v []byte) error {
 		*met = MessageEntityTypeBlockquote
 	case "expandable_blockquote":
 		*met = MessageEntityTypeExpandableBlockquote
+	case "date_time":
+		*met = MessageEntityTypeDateTime
 	default:
 		return fmt.Errorf("unknown message entity type: %s", string(v))
 	}
